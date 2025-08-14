@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ProcessExternalWebhookReceiverWorker": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

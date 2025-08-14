@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessExternalWebhookReceiverWorker", "ProcessExternalWebhookReceiver.Worker\ProcessExternalWebhookReceiverWorker.csproj", "{42BECBDA-BD6C-41D6-888E-8AB423A9A92C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessExternalWebhookReceiver.Application", "ProcessExternalWebhookReceiver.Application\ProcessExternalWebhookReceiver.Application.csproj", "{525913CB-9BC1-42A6-B42C-A7B7D99245CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessExternalWebhookReceiver.Infrastructure", "ProcessExternalWebhookReceiver.Infrastructure\ProcessExternalWebhookReceiver.Infrastructure.csproj", "{4A29C242-97AF-4240-883B-F3EBCA62F19A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessExternalWebhookReceiver.CrossCutting", "ProcessExternalWebhookReceiver.CrossCutting\ProcessExternalWebhookReceiver.CrossCutting.csproj", "{509B574F-AE0A-4E63-8FDD-7DCD91D53572}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessExternalWebhookReceiver.Domain", "ProcessExternalWebhookReceiver.Domain\ProcessExternalWebhookReceiver.Domain.csproj", "{476C2069-6AB2-4FFC-85AF-76EEF81BB7C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonSolution", "..\CommonSolution\CommonSolution.csproj", "{0063F9EF-A686-3E43-0E48-3377371C65CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42BECBDA-BD6C-41D6-888E-8AB423A9A92C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42BECBDA-BD6C-41D6-888E-8AB423A9A92C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42BECBDA-BD6C-41D6-888E-8AB423A9A92C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42BECBDA-BD6C-41D6-888E-8AB423A9A92C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{525913CB-9BC1-42A6-B42C-A7B7D99245CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{525913CB-9BC1-42A6-B42C-A7B7D99245CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{525913CB-9BC1-42A6-B42C-A7B7D99245CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{525913CB-9BC1-42A6-B42C-A7B7D99245CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A29C242-97AF-4240-883B-F3EBCA62F19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A29C242-97AF-4240-883B-F3EBCA62F19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A29C242-97AF-4240-883B-F3EBCA62F19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A29C242-97AF-4240-883B-F3EBCA62F19A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{509B574F-AE0A-4E63-8FDD-7DCD91D53572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{509B574F-AE0A-4E63-8FDD-7DCD91D53572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{509B574F-AE0A-4E63-8FDD-7DCD91D53572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{509B574F-AE0A-4E63-8FDD-7DCD91D53572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476C2069-6AB2-4FFC-85AF-76EEF81BB7C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476C2069-6AB2-4FFC-85AF-76EEF81BB7C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476C2069-6AB2-4FFC-85AF-76EEF81BB7C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476C2069-6AB2-4FFC-85AF-76EEF81BB7C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0063F9EF-A686-3E43-0E48-3377371C65CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0063F9EF-A686-3E43-0E48-3377371C65CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0063F9EF-A686-3E43-0E48-3377371C65CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0063F9EF-A686-3E43-0E48-3377371C65CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F42BF750-B21F-4987-9088-830981A54F43}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonSolution\CommonSolution.csproj" />
+    <ProjectReference Include="..\ProcessExternalWebhookReceiver.Application\ProcessExternalWebhookReceiver.Application.csproj" />
+    <ProjectReference Include="..\ProcessExternalWebhookReceiver.Domain\ProcessExternalWebhookReceiver.Domain.csproj" />
+    <ProjectReference Include="..\ProcessExternalWebhookReceiver.Infrastructure\ProcessExternalWebhookReceiver.Infrastructure.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.8" />
+		<PackageReference Include="Scrutor" Version="6.1.0" />
+	</ItemGroup>
+
+</Project>
