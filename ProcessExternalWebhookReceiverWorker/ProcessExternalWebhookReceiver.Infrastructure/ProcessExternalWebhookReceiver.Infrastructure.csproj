@@ -17,4 +17,8 @@
     <ProjectReference Include="..\ProcessExternalWebhookReceiver.Domain\ProcessExternalWebhookReceiver.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Scripts\StoredProcedures\" />
+  </ItemGroup>
+
 </Project>
