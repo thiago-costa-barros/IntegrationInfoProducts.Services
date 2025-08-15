@@ -8,13 +8,13 @@ namespace ProcessExternalWebhookReceiverWorker
     {
         private readonly ILogger<Worker> _logger;
         private readonly IOptionsMonitor<ServiceExecution> _options;
-        private readonly IExecuteService _execute;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-        public Worker(ILogger<Worker> logger, IOptionsMonitor<ServiceExecution> options, IExecuteService execute)
+        public Worker(ILogger<Worker> logger, IOptionsMonitor<ServiceExecution> options, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _options = options;
-            _execute = execute;
+            _scopeFactory = scopeFactory;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -27,7 +27,9 @@ namespace ProcessExternalWebhookReceiverWorker
 
                 try
                 {
-                    await _execute.ExecuteAsync(options.BatchSize, stoppingToken);
+                    var scope = _scopeFactory.CreateScope();
+                    var exec = scope.ServiceProvider.GetRequiredService<IExecuteService>(); 
+                    await exec.ExecuteAsync(options.BatchSize, stoppingToken);
                 }
                 catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested) { }
                 catch (Exception ex)

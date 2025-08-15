@@ -12,9 +12,9 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Repositories
         {
             _externalWebhookReceiverDAO = externalWebhookReceiverDAO;
         }
-        public async Task<List<ExternalWebhookReceiver>> GetExternalWebhookReceiverByStatusAsync(ExternalWebhookReceiverStatus externalWebhookReceiverStatus)
+        public async Task<List<ExternalWebhookReceiver>> GetExternalWebhookReceiverByStatusAsync(ExternalWebhookReceiverStatus externalWebhookReceiverStatus, CancellationToken cancellationToken = default)
         {
-            return await _externalWebhookReceiverDAO.GetExternalWebhookReceiverByStatus(externalWebhookReceiverStatus);
+            return await _externalWebhookReceiverDAO.GetExternalWebhookReceiverByStatus(externalWebhookReceiverStatus, cancellationToken);
         }
     }
 }

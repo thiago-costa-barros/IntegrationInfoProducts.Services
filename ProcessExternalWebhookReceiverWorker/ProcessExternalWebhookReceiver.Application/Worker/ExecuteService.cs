@@ -15,9 +15,9 @@ namespace ProcessExternalWebhookReceiver.Application.Worker
             _logger = logger;
             _externalWebhookReceiverRepository = externalWebhookReceiverRepository;
         }
-        public async Task ExecuteAsync(int batchSize, CancellationToken stoppingToken)
+        public async Task ExecuteAsync(int batchSize, CancellationToken cancellationToken)
         {
-            List<ExternalWebhookReceiver> externalWebhookReceivers = await _externalWebhookReceiverRepository.GetExternalWebhookReceiverByStatusAsync(ExternalWebhookReceiverStatus.Created);
+            List<ExternalWebhookReceiver> externalWebhookReceivers = await _externalWebhookReceiverRepository.GetExternalWebhookReceiverByStatusAsync(ExternalWebhookReceiverStatus.Created, cancellationToken);
             _logger.LogInformation("Executing batch of size {BatchSize} at {Time}", batchSize, DateTimeOffset.Now);
             await Task.CompletedTask;
         }

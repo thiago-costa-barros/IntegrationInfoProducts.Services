@@ -3,7 +3,6 @@ using CommonSolution.Interfaces.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using ProcessExternalWebhookReceiver.Application;
 using ProcessExternalWebhookReceiver.Infrastructure;
-using ProcessExternalWebhookReceiver.Infrastructure.Data.Context;
 
 namespace ProcessExternalWebhookReceiver.CrossCutting.DependencyInjection
 {
@@ -11,10 +10,7 @@ namespace ProcessExternalWebhookReceiver.CrossCutting.DependencyInjection
     {
         public static IServiceCollection AddDependencyInjectionConfig(this IServiceCollection services)
         {
-            // Infrastructure
-            services.AddDbContext<ApplicationDbContext>();
-
-            // Unit of Work
+            //Unit of Work
             //services.AddScoped<IDbTransaction, DbTransaction>();
 
             //Services

@@ -5,6 +5,6 @@ namespace ProcessExternalWebhookReceiver.Application.Interfaces.DAOs
 {
     public interface IExternalWebhookReceiverDAO
     {
-        Task<List<ExternalWebhookReceiver>> GetExternalWebhookReceiverByStatus(ExternalWebhookReceiverStatus externalWebhookReceiverStatus);
+        Task<List<ExternalWebhookReceiver>> GetExternalWebhookReceiverByStatus(ExternalWebhookReceiverStatus externalWebhookReceiverStatus, CancellationToken cancellationToken = default);
     }
 }

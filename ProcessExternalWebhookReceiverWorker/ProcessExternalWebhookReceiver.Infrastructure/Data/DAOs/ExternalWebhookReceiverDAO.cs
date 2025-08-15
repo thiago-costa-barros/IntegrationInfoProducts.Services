@@ -13,7 +13,7 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
         {
             _context = context;
         }
-        public async Task<List<ExternalWebhookReceiver>> GetExternalWebhookReceiverByStatus(ExternalWebhookReceiverStatus externalWebhookReceiverStatus)
+        public async Task<List<ExternalWebhookReceiver>> GetExternalWebhookReceiverByStatus(ExternalWebhookReceiverStatus externalWebhookReceiverStatus, CancellationToken cancellationToken = default)
         {
             var parameters = new (string, object?)[]
             {
@@ -24,7 +24,7 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
                 "[IntegrationSchema].[GetExternalWebhookReceiverByStatus]", 
                 parameters);
 
-            await using var reader = await command.ExecuteReaderAsync();
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             List<ExternalWebhookReceiver> entity = await DataReaderMapper.MapToListAsync<ExternalWebhookReceiver>(reader);
             
             return entity;

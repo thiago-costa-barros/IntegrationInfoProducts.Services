@@ -2,6 +2,6 @@
 {
     public interface IExecuteService
     {
-        Task ExecuteAsync(int batchSize, CancellationToken stoppingToken);
+        Task ExecuteAsync(int batchSize, CancellationToken cancellationToken);
     }
 }
