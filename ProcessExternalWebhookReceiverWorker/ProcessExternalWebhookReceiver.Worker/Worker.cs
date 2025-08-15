@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Options;
-using ProcessExternalWebhookReceiver.Application.Worker;
-using ProcessExternalWebhookReceiver.Application.Worker.Interfaces;
+using ProcessExternalWebhookReceiver.Application.Interfaces;
 using ProcessExternalWebhookReceiver.Domain.Entities;
 
 namespace ProcessExternalWebhookReceiverWorker
