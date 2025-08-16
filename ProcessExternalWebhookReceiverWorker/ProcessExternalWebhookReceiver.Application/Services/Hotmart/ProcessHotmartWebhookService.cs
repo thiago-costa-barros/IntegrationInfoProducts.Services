@@ -1,7 +1,6 @@
 ﻿using CommonSolution.Entities.IntegrationSchema;
 using CommonSolution.Extensions;
 using CommonSolution.Helpers;
-using Microsoft.Extensions.Logging;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events;
 using ProcessExternalWebhookReceiver.Application.Interfaces.Services.Hotmart;
