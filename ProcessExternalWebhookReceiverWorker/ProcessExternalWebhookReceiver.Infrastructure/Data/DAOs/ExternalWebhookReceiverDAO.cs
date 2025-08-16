@@ -29,5 +29,21 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
             
             return entity;
         }
+
+        public async Task UpdateExternalWebhookReceiverStatusById(int externalWebhookReceiverId, ExternalWebhookReceiverStatus externalWebhookReceiverStatus, int userId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new (string, object?)[]
+            {
+                ("@paramExternalWebhookReceiverId", externalWebhookReceiverId),
+                ("@paramStatus", externalWebhookReceiverStatus),
+                ("@paramUserId", userId)
+            };
+
+            await using var command = _context.StoredProcedureCommand(
+                "[IntegrationSchema].[UpdateExternalWebhookReceiverStatusById]", 
+                parameters);
+
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        }
     }
 }

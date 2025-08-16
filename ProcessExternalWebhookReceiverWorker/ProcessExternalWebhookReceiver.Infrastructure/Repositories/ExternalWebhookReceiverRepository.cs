@@ -16,5 +16,10 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Repositories
         {
             return await _externalWebhookReceiverDAO.GetExternalWebhookReceiverByStatus(externalWebhookReceiverStatus, cancellationToken);
         }
+
+        public async Task UpdateExternalWebhookReceiverStatusById(int externalWebhookReceiverId, ExternalWebhookReceiverStatus externalWebhookReceiverStatus, int userId, CancellationToken cancellationToken = default)
+        {
+            await _externalWebhookReceiverDAO.UpdateExternalWebhookReceiverStatusById(externalWebhookReceiverId, externalWebhookReceiverStatus, userId, cancellationToken);
+        }
     }
 }
