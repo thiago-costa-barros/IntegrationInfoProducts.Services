@@ -17,13 +17,13 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.Context
 
         public UnitOfWork(ApplicationDbContext db) => _db = db;
 
-        public async Task BeginTransactionAsync(IsolationLevel isolation = IsolationLevel.ReadCommitted, CancellationToken ct = default)
+        public async Task BeginTransaction(CancellationToken ct = default)
         {
             if (_tx is not null) return; // já aberta
-            _tx = await _db.Database.BeginTransactionAsync(isolation, ct);
+            _tx = await _db.Database.BeginTransactionAsync(ct);
         }
 
-        public async Task CommitAsync(CancellationToken ct = default)
+        public async Task Commit(CancellationToken ct = default)
         {
             if (_tx is null) return;
             await _db.SaveChangesAsync(ct); // garante flush antes do commit
@@ -32,7 +32,7 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.Context
             _tx = null;
         }
 
-        public async Task RollbackAsync(CancellationToken ct = default)
+        public async Task Rollback(CancellationToken ct = default)
         {
             if (_tx is null) return;
             await _tx.RollbackAsync(ct);
@@ -40,7 +40,7 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.Context
             _tx = null;
         }
 
-        public async Task ExecuteResilientAsync(Func<CancellationToken, Task> action, CancellationToken ct = default)
+        public async Task ExecuteResilient(Func<CancellationToken, Task> action, CancellationToken ct = default)
         {
             var strategy = _db.Database.CreateExecutionStrategy();
             await strategy.ExecuteAsync(async () =>
