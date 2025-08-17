@@ -10,6 +10,11 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart
 {
     public class HotmartEventRouterService : IHotmartEventRouterService
     {
+        private readonly IHandlerHotmartWebhookEvents _handlerHotmartPurchaseEvent;
+        public HotmartEventRouterService(IHandlerHotmartWebhookEvents handlerHotmartPurchaseEvent)
+        {
+            _handlerHotmartPurchaseEvent = handlerHotmartPurchaseEvent;
+        }
         public async Task RouteAsync(ExternalWebhookReceiver externalWebhookReceiver, HotmartWebhookReceiverPayload payload, CancellationToken cancellationToken)
         {
             if (!EnumHelper.TryParseEnum(payload.Event, out HotmartWebhookEventType eventType))
@@ -27,6 +32,7 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart
                 case HotmartWebhookEventType.PURCHASE_EXPIRED:
                 case HotmartWebhookEventType.PURCHASE_DELAYED:
                     payload.Data.MapToObject<HotmartPuchaseEventPayload>();
+                    await _handlerHotmartPurchaseEvent.HandlePurchaseEventAsync(externalWebhookReceiver, cancellationToken);
                     break;
                 case HotmartWebhookEventType.SUBSCRIPTION_CANCELLATION:
                     // Handle subscription created event
