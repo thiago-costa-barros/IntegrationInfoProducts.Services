@@ -3,8 +3,12 @@ using CommonSolution.Extensions;
 using CommonSolution.Helpers;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events;
+using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects;
+using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects.HotmartPurchaseEvent;
 using ProcessExternalWebhookReceiver.Application.Interfaces.Services.Hotmart;
+using ProcessExternalWebhookReceiver.Application.Mappings.Hotmart;
 using ProcessExternalWebhookReceiver.Domain.Entities.Enums;
+using System.Text.Json;
 
 namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart
 {
@@ -15,8 +19,10 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart
         {
             _handlerHotmartPurchaseEvent = handlerHotmartPurchaseEvent;
         }
-        public async Task RouteAsync(ExternalWebhookReceiver externalWebhookReceiver, HotmartWebhookReceiverPayload payload, CancellationToken cancellationToken)
+        public async Task RouteAsync(ExternalWebhookReceiver externalWebhookReceiver, CancellationToken cancellationToken)
         {
+            HotmartWebhookReceiverPayload payload = JsonSerializer.Deserialize<HotmartWebhookReceiverPayload>(externalWebhookReceiver.Payload);
+            
             if (!EnumHelper.TryParseEnum(payload.Event, out HotmartWebhookEventType eventType))
                 throw new InvalidOperationException($"Evento inválido: {payload.Event}");
 
@@ -31,8 +37,8 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart
                 case HotmartWebhookEventType.PURCHASE_CHARGEBACK:
                 case HotmartWebhookEventType.PURCHASE_EXPIRED:
                 case HotmartWebhookEventType.PURCHASE_DELAYED:
-                    payload.Data.MapToObject<HotmartPuchaseEventPayload>();
-                    await _handlerHotmartPurchaseEvent.HandlePurchaseEventAsync(externalWebhookReceiver, cancellationToken);
+                    HotmartEventPayload<HotmartPurchaseEventObjectPayment> hotmartEventPayload = await MapHotmartEventPayload.MapHotmartPurchaseEventPayload(externalWebhookReceiver,payload);
+                    await _handlerHotmartPurchaseEvent.HandlePurchaseEventsAsync(hotmartEventPayload, cancellationToken);
                     break;
                 case HotmartWebhookEventType.SUBSCRIPTION_CANCELLATION:
                     // Handle subscription created event

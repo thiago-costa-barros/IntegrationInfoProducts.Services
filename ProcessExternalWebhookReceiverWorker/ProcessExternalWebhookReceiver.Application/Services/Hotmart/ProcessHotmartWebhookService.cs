@@ -20,7 +20,7 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart
                 throw new ArgumentNullException(nameof(payload), "Payload cannot be null");
             }
 
-            await _hotmartEventRouterService.RouteAsync(externalWebhookReceiver, payload, cancellationToken);
+            await _hotmartEventRouterService.RouteAsync(externalWebhookReceiver, cancellationToken);
 
             await Task.CompletedTask;
         }

@@ -5,6 +5,6 @@ namespace ProcessExternalWebhookReceiver.Application.Interfaces.Services.Hotmart
 {
     public interface IHotmartEventRouterService
     {
-        Task RouteAsync(ExternalWebhookReceiver externalWebhookReceiver, HotmartWebhookReceiverPayload payload, CancellationToken cancellationToken);
+        Task RouteAsync(ExternalWebhookReceiver externalWebhookReceiver, CancellationToken cancellationToken);
     }
 }
