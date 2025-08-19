@@ -1,7 +1,7 @@
 ﻿using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects.HotmartPurchaseEvent;
 using System.Text.Json.Serialization;
 
-namespace ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events
+namespace ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects
 {
     public class HotmartPuchaseEventPayload
     {
