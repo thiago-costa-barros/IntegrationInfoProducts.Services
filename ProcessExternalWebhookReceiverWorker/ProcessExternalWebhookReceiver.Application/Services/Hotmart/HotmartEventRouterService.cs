@@ -14,10 +14,10 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart
 {
     public class HotmartEventRouterService : IHotmartEventRouterService
     {
-        private readonly IHandlerHotmartWebhookEvents _handlerHotmartPurchaseEvent;
-        public HotmartEventRouterService(IHandlerHotmartWebhookEvents handlerHotmartPurchaseEvent)
+        private readonly IHandlerHotmartWebhookEvents _handlerHotmartWebhookEvent;
+        public HotmartEventRouterService(IHandlerHotmartWebhookEvents handlerHotmartWebhookEvent)
         {
-            _handlerHotmartPurchaseEvent = handlerHotmartPurchaseEvent;
+            _handlerHotmartWebhookEvent = handlerHotmartWebhookEvent;
         }
         public async Task RouteAsync(ExternalWebhookReceiver externalWebhookReceiver, CancellationToken cancellationToken)
         {
@@ -37,8 +37,8 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart
                 case HotmartWebhookEventType.PURCHASE_CHARGEBACK:
                 case HotmartWebhookEventType.PURCHASE_EXPIRED:
                 case HotmartWebhookEventType.PURCHASE_DELAYED:
-                    HotmartEventPayload<HotmartPurchaseEventObjectPayment> hotmartEventPayload = await MapHotmartEventPayload.MapHotmartPurchaseEventPayload(externalWebhookReceiver,payload);
-                    await _handlerHotmartPurchaseEvent.HandlePurchaseEventsAsync(hotmartEventPayload, cancellationToken);
+                    HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload = await MapHotmartEventPayload.MapHotmartPurchaseEventPayload(externalWebhookReceiver,payload);
+                    await _handlerHotmartWebhookEvent.HandlePurchaseEventsAsync(hotmartEventPayload, cancellationToken);
                     break;
                 case HotmartWebhookEventType.SUBSCRIPTION_CANCELLATION:
                     // Handle subscription created event
