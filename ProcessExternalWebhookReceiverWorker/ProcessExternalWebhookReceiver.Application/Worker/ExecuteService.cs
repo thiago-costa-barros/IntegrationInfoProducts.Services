@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using ProcessExternalWebhookReceiver.Application.Interfaces;
 using ProcessExternalWebhookReceiver.Application.Interfaces.Repositories;
 using ProcessExternalWebhookReceiver.Application.Interfaces.Services;
+using System.Diagnostics;
 
 namespace ProcessExternalWebhookReceiver.Application.Worker
 {
@@ -32,6 +33,7 @@ namespace ProcessExternalWebhookReceiver.Application.Worker
         }
         public async Task ExecuteAsync(int batchSize, CancellationToken cancellationToken)
         {
+            var stopwatch = Stopwatch.StartNew();
             List<ExternalWebhookReceiver> externalWebhookReceivers = await _externalWebhookReceiverRepository.GetExternalWebhookReceiverByStatusAsync(ExternalWebhookReceiverStatus.Created, cancellationToken);
             List<ExternalWebhookReceiver> externalWebhookReceiversError = await _externalWebhookReceiverRepository.GetExternalWebhookReceiverByStatusAsync(ExternalWebhookReceiverStatus.Error, cancellationToken);
             
@@ -40,6 +42,7 @@ namespace ProcessExternalWebhookReceiver.Application.Worker
 
             foreach (var externalWebhookReceiver in externalWebhookReceivers)
             {
+                var itemStopwatch = Stopwatch.StartNew();
                 try
                 {
                     await _unitOfWork.BeginTransaction(cancellationToken);
@@ -81,8 +84,12 @@ namespace ProcessExternalWebhookReceiver.Application.Worker
                         _logger.LogError(updateEx, "Error updating status for ExternalWebhookReceiverId {Id} to Error", externalWebhookReceiver.ExternalWebhookReceiverId);
                     }
                 }
+                itemStopwatch.Stop();
+                _logger.LogInformation("Processed ExternalWebhookReceiverId {Id} in {ElapsedMilliseconds} ms", externalWebhookReceiver.ExternalWebhookReceiverId, itemStopwatch.ElapsedMilliseconds);
             }
 
+            stopwatch.Stop();
+            _logger.LogInformation("Processed {Count} webhooks in {ElapsedMilliseconds} ms", externalWebhookReceivers.Count, stopwatch.ElapsedMilliseconds);
             _logger.LogInformation("Executing batch of size {BatchSize} at {Time}", batchSize, DateTimeOffset.Now);
             await Task.CompletedTask;
         }
