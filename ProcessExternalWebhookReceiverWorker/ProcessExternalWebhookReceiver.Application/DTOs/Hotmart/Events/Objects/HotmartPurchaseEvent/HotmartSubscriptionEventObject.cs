@@ -14,7 +14,7 @@ namespace ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects
     public class HotmartSubscriptionEventObjectSubscriptionPlan
     {
         [JsonPropertyName("id")]
-        public string? Id { get; set; }
+        public long Id { get; set; }
         [JsonPropertyName("name")]
         public string? Name { get; set; }
     }
