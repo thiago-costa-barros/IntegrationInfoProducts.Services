@@ -46,7 +46,7 @@ namespace ProcessExternalWebhookReceiver.Application.Mappings
         }
         private static Task<PersonType> MapPersonTypeFromBuyerHotmart(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload)
         {
-            string personType = hotmartEventPayload.Payload?.Data.Producer?.LegalNature;
+            string personType = hotmartEventPayload.Payload?.Data.Buyer?.DocumentType;
             switch (personType)
             {
                 case "CPF":
