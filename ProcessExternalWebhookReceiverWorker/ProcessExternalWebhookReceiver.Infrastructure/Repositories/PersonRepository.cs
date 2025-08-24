@@ -16,14 +16,28 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Repositories
             _useCache = appSettings.Value.UseCache;
             _personDAO = person;
         }
-        public Task<Person> CreatePerson(Person person, CancellationToken cancellationToken = default)
+        public async Task<Person> CreatePerson(Person person, CancellationToken cancellationToken = default)
+        {
+            Person newPerson = await _personDAO.CreatePerson(person);
+            return newPerson;
+        }
+        public Task<Person> UpdatePerson(Person person, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         public Task<Person> GetPersonByEmail(string email, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            if (_useCache)
+            {
+                // Try to get from cache
+                // For now, return null if not implemented
+                return null;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public async Task<Person> GetPersonByTaxNumber(string taxNumber, CancellationToken cancellationToken = default)
@@ -41,9 +55,5 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Repositories
             }
         }
 
-        public Task<Person> UpdatePerson(Person person, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

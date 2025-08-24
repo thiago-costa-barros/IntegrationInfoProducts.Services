@@ -1,10 +1,8 @@
 ﻿using CommonSolution.Entities.IntegrationSchema;
-using CommonSolution.Extensions;
 using CommonSolution.Helpers;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects;
-using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects.HotmartPurchaseEvent;
 using ProcessExternalWebhookReceiver.Application.Interfaces.Services.Hotmart;
 using ProcessExternalWebhookReceiver.Application.Mappings.Hotmart;
 using ProcessExternalWebhookReceiver.Domain.Entities.Enums;
