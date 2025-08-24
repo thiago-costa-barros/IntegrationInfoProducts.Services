@@ -24,6 +24,9 @@ namespace ProcessExternalWebhookReceiver.CrossCutting.DependencyInjection
             services.Configure<ServiceExecution>(
                 configuration.GetSection("ServiceExecution"));
 
+            services.Configure<AppSettings>(
+                configuration.GetSection("AppSettings"));
+
             return services;
         }
     }
