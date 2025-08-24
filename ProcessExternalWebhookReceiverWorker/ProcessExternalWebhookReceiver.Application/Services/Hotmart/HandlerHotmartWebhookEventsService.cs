@@ -7,10 +7,10 @@ using ProcessExternalWebhookReceiver.Domain.Entities.Enums;
 
 namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart
 {
-    public class HandlerHotmartWebhookEvents : IHandlerHotmartWebhookEvents
+    public class HandlerHotmartWebhookEventsService : IHandlerHotmartWebhookEvents
     {
         private readonly IHotmartEventPurchaseService _hotmartEventPurchaseService;
-        public HandlerHotmartWebhookEvents(IHotmartEventPurchaseService hotmartEventPurchaseService)
+        public HandlerHotmartWebhookEventsService(IHotmartEventPurchaseService hotmartEventPurchaseService)
         {
             _hotmartEventPurchaseService = hotmartEventPurchaseService;
         }
