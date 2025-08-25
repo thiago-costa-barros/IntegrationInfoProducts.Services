@@ -1,4 +1,5 @@
-﻿using CommonSolution.Entities.Common.Enums;
+﻿using CommonSolution.Entities.Common;
+using CommonSolution.Entities.Common.Enums;
 using CommonSolution.Entities.CoreSchema;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects;
@@ -7,7 +8,7 @@ namespace ProcessExternalWebhookReceiver.Application.Mappings.Hotmart
 {
     public class HotmartPersonMapping
     {
-        public static Task<Person> HotmartProducerMapToPerson(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload)
+        public static Task<Person> HotmartProducerMapToPerson(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload, DefaultUserService defaultUserService)
         {
             PersonType personType = MapPersonTypeFromProducerHotmart(hotmartEventPayload).Result;
             Person person = new Person
@@ -15,11 +16,13 @@ namespace ProcessExternalWebhookReceiver.Application.Mappings.Hotmart
                 TaxNumber = hotmartEventPayload.Payload?.Data.Producer?.Document,
                 Name = hotmartEventPayload.Payload?.Data.Producer?.Name,
                 Email = hotmartEventPayload.Payload?.Data.Product.SupportEmail,
-                Type = personType
+                Type = personType,
+                CreationUserId = defaultUserService.DefaultUserId,
+                UpdateUserId = defaultUserService.DefaultUserId
             };
             return Task.FromResult(person);
         }
-        public static Task<Person> HotmartBuyerMapToPerson(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload)
+        public static Task<Person> HotmartBuyerMapToPerson(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload, DefaultUserService defaultUserService)
         {
             PersonType personType = MapPersonTypeFromBuyerHotmart(hotmartEventPayload).Result;
             Person person = new Person
@@ -27,7 +30,9 @@ namespace ProcessExternalWebhookReceiver.Application.Mappings.Hotmart
                 TaxNumber = hotmartEventPayload.Payload?.Data.Buyer?.Document,
                 Name = hotmartEventPayload.Payload?.Data.Buyer?.Name,
                 Email = hotmartEventPayload.Payload?.Data.Buyer?.Email,
-                Type = personType
+                Type = personType,
+                CreationUserId = defaultUserService.DefaultUserId,
+                UpdateUserId = defaultUserService.DefaultUserId
             };
             return Task.FromResult(person);
         }

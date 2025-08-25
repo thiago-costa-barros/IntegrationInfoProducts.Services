@@ -11,20 +11,12 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
     public class PersonDAO : IPersonDAO
     {
         private readonly ApplicationDbContext _context;
-        private readonly IOptions<DefaultUserService> _defaultUser;
-        public PersonDAO(ApplicationDbContext context, IOptions<DefaultUserService> defaultUser)
+        public PersonDAO(ApplicationDbContext context)
         {
             _context = context;
-            _defaultUser = defaultUser;
         }
         public async Task<Person> CreatePerson(Person person, CancellationToken cancellationToken = default)
         {
-            var DateTimeNow = DateTime.UtcNow;
-            person.CreationDate = DateTimeNow;
-            person.UpdateDate = DateTimeNow;
-            person.CreationUserId= _defaultUser.Value.DefaultUserId;
-            person.UpdateUserId = _defaultUser.Value.DefaultUserId;
-
             _context.Add(person);
 
             await _context.SaveChangesAsync(cancellationToken);
