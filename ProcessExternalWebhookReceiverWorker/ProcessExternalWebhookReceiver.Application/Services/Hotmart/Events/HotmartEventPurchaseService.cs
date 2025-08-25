@@ -13,10 +13,18 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
     {
         private readonly IPersonService _personService;
         private readonly IOptions<DefaultUserService> _defaultUser;
-        public HotmartEventPurchaseService(IPersonService personService, IOptions<DefaultUserService> defaultUser)
+        private readonly ICompanyService _companyService;
+        private readonly ICompanyBranchService _companyBranchService;
+        public HotmartEventPurchaseService(
+            IPersonService personService, 
+            IOptions<DefaultUserService> defaultUser,
+            ICompanyService companyService,
+            ICompanyBranchService companyBranchService)
         {
             _personService = personService;
             _defaultUser = defaultUser;
+            _companyService = companyService;
+            _companyBranchService = companyBranchService;
         }
         public async Task HandlePurchaseEventsAsync(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload, CancellationToken cancellationToken)
         {
@@ -30,6 +38,9 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
 
             Person buyer = HotmartPersonMapping.HotmartBuyerMapToPerson(hotmartEventPayload, defaultUser).Result;
             Person buyerPerson = await _personService.GetOrCreatePerson(buyer, cancellationToken);
+
+            Company company = await _companyService.GetCompanyById(hotmartEventPayload.CompanyId);
+            CompanyBranch companyBranch = await _companyBranchService.GetCompanyBranchByCompanyIdAndTaxNumber(company.CompanyId,producerPerson.TaxNumber);
             //continuar com gets de company, companybranch e person
 
         }
