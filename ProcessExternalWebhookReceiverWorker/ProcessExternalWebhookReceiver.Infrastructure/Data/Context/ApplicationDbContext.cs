@@ -13,6 +13,8 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.Context
 
         public DbSet<ExternalWebhookReceiver> ExternalWebhookReceiver { get; set; }
         public DbSet<Company> Company { get; set; }
+        public DbSet<CompanyBranch> CompanyBranch { get; set; }
         public DbSet<Person> Person { get; set; }
+
     }
 }
