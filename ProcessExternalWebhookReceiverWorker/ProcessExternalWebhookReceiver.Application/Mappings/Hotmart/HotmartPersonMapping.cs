@@ -3,9 +3,9 @@ using CommonSolution.Entities.CoreSchema;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects;
 
-namespace ProcessExternalWebhookReceiver.Application.Mappings
+namespace ProcessExternalWebhookReceiver.Application.Mappings.Hotmart
 {
-    public class PersonMapping
+    public class HotmartPersonMapping
     {
         public static Task<Person> HotmartProducerMapToPerson(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload)
         {

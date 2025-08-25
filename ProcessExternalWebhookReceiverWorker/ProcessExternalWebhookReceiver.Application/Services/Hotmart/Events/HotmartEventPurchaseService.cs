@@ -3,7 +3,7 @@ using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events.Objects;
 using ProcessExternalWebhookReceiver.Application.Interfaces.Services;
 using ProcessExternalWebhookReceiver.Application.Interfaces.Services.Hotmart.Events;
-using ProcessExternalWebhookReceiver.Application.Mappings;
+using ProcessExternalWebhookReceiver.Application.Mappings.Hotmart;
 
 namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
 {
@@ -21,10 +21,10 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
             if (string.IsNullOrEmpty(personTaxNumber))
                 throw new InvalidOperationException("O número de documento do produtor não pode ser nulo ou vazio.");
             
-            Person producer = PersonMapping.HotmartProducerMapToPerson(hotmartEventPayload).Result;
+            Person producer = HotmartPersonMapping.HotmartProducerMapToPerson(hotmartEventPayload).Result;
             Person producerPerson = await _personService.GetOrCreatePerson(producer, cancellationToken);
 
-            Person buyer = PersonMapping.HotmartBuyerMapToPerson(hotmartEventPayload).Result;
+            Person buyer = HotmartPersonMapping.HotmartBuyerMapToPerson(hotmartEventPayload).Result;
             Person buyerPerson = await _personService.GetOrCreatePerson(buyer, cancellationToken);
             //continuar com gets de company, companybranch e person
 
