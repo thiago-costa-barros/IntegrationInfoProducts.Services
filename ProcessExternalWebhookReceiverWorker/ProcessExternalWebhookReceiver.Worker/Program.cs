@@ -1,6 +1,5 @@
-using Microsoft.EntityFrameworkCore;
+using CommonSolution.CrossCutting.PostgresSQL;
 using ProcessExternalWebhookReceiver.CrossCutting.DependencyInjection;
-using ProcessExternalWebhookReceiver.Infrastructure.Data.Context;
 using ProcessExternalWebhookReceiverWorker;
 
 var builder = Host.CreateApplicationBuilder(args);
@@ -8,12 +7,9 @@ builder.Services.AddHostedService<Worker>();
 
 builder.Configuration.AddEnvironmentVariables();
 
-var stringSqlServer = builder.Configuration.GetConnectionString("DefaultConnectionSqlServer");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(stringSqlServer));
-
-builder.Services.AddDependencyInjectionConfig();
 builder.Services.AddOptionsInjectionConfig(builder.Configuration);
+builder.Services.AddDependencyInjectionConfig();
+builder.Services.AddDatabaseConfig(builder.Configuration);
 
 var host = builder.Build();
 host.Run();

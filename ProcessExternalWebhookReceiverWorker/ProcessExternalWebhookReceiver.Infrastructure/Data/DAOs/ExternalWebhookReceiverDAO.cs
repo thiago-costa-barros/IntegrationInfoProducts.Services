@@ -1,14 +1,14 @@
 ﻿using CommonSolution.Entities.Common.Enums;
 using CommonSolution.Entities.IntegrationSchema;
+using CommonSolution.CrossCutting.PostgresSQL;
 using ProcessExternalWebhookReceiver.Application.Interfaces.DAOs;
-using ProcessExternalWebhookReceiver.Infrastructure.Data.Context;
-using ProcessExternalWebhookReceiver.Infrastructure.Data.Context.Extensions.SqlServer;
-
+using CommonSolution.CrossCutting.PostgresSQL.Extensions;
 namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
 {
     public class ExternalWebhookReceiverDAO : IExternalWebhookReceiverDAO
     {
         private readonly ApplicationDbContext _context;
+        private const string SchemaName = "IntegrationSchema";
         public ExternalWebhookReceiverDAO(ApplicationDbContext context)
         {
             _context = context;
@@ -20,8 +20,9 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
                 ("@paramStatus", externalWebhookReceiverStatus )
             };
 
-            await using var command = _context.StoredProcedureCommand(
-                "[IntegrationSchema].[GetExternalWebhookReceiverByStatus]", 
+            await using var command = _context.FunctionCommand(
+                SchemaName,
+                "GetExternalWebhookReceiverByStatus", 
                 parameters);
 
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -40,7 +41,8 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
             };
 
             await using var command = _context.StoredProcedureCommand(
-                "[IntegrationSchema].[UpdateExternalWebhookReceiverStatusById]", 
+                SchemaName,
+                "UpdateExternalWebhookReceiverStatusById", 
                 parameters);
 
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);

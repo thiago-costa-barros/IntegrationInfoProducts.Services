@@ -1,16 +1,14 @@
-﻿using CommonSolution.Entities.Common;
-using CommonSolution.Entities.Common.Enums;
-using CommonSolution.Entities.CoreSchema;
-using Microsoft.Extensions.Options;
+﻿using CommonSolution.Entities.CoreSchema;
+using CommonSolution.CrossCutting.PostgresSQL;
 using ProcessExternalWebhookReceiver.Application.Interfaces.DAOs;
-using ProcessExternalWebhookReceiver.Infrastructure.Data.Context;
-using ProcessExternalWebhookReceiver.Infrastructure.Data.Context.Extensions.SqlServer;
+using CommonSolution.CrossCutting.PostgresSQL.Extensions;
 
 namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
 {
     public class PersonDAO : IPersonDAO
     {
         private readonly ApplicationDbContext _context;
+        private const string SchemaName = "CoreSchema";
         public PersonDAO(ApplicationDbContext context)
         {
             _context = context;
@@ -23,24 +21,20 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
             return person;
         }
 
-        public Task<Person> GetPersonByEmail(string email, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Person> GetPersonByTaxNumber(string taxNumber, CancellationToken cancellationToken = default)
+        public async Task<Person?> GetPersonByTaxNumber(string taxNumber, CancellationToken cancellationToken = default)
         {
             var parameters = new (string, object?)[]
             {
-                ("@paramTaxNumber", taxNumber )
+                ("_paramTaxNumber", taxNumber )
             };
 
-            await using var command = _context.StoredProcedureCommand(
-                "[CoreSchema].[GetPersonByTaxNumber]",
+            await using var command = _context.FunctionCommand(
+                SchemaName,
+                "GetPersonByTaxNumber",
                 parameters);
 
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            Person entity = await DataReaderMapper.MapToSingleAsync<Person>(reader);
+            Person? entity = await DataReaderMapper.MapToSingleAsync<Person>(reader);
 
             return entity;
         }
