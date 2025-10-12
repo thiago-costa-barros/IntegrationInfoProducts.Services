@@ -1,13 +1,7 @@
-﻿using CommonSolution.Entities.Common;
-using CommonSolution.Entities.Logging;
+﻿using CommonSolution.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProcessExternalWebhookReceiver.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcessExternalWebhookReceiver.CrossCutting.DependencyInjection
 {
@@ -15,17 +9,10 @@ namespace ProcessExternalWebhookReceiver.CrossCutting.DependencyInjection
     {
         public static IServiceCollection AddOptionsInjectionConfig(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<DefaultUserService>(
-                configuration.GetSection("DefaultUser"));
-
-            services.Configure<LoggingOptions>(
-                configuration.GetSection("LoggingOptions"));
+            services.AddCommonOptions(configuration);
 
             services.Configure<ServiceExecution>(
                 configuration.GetSection("ServiceExecution"));
-
-            services.Configure<AppSettings>(
-                configuration.GetSection("AppSettings"));
 
             return services;
         }

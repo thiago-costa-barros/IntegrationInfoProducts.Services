@@ -4,7 +4,7 @@ using CommonSolution.Interfaces.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using ProcessExternalWebhookReceiver.Application;
 using ProcessExternalWebhookReceiver.Infrastructure;
-using ProcessExternalWebhookReceiver.Infrastructure.Data.Context;
+using CommonSolution.CrossCutting.PostgresSQL;
 
 namespace ProcessExternalWebhookReceiver.CrossCutting.DependencyInjection
 {
