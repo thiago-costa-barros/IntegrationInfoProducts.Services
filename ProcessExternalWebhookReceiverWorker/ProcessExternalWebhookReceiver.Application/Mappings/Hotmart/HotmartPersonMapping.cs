@@ -15,7 +15,6 @@ namespace ProcessExternalWebhookReceiver.Application.Mappings.Hotmart
             {
                 TaxNumber = hotmartEventPayload.Payload?.Data.Producer?.Document,
                 Name = hotmartEventPayload.Payload?.Data.Producer?.Name,
-                Email = hotmartEventPayload.Payload?.Data.Product.SupportEmail,
                 Type = personType,
                 CreationUserId = defaultUserService.DefaultUserId,
                 UpdateUserId = defaultUserService.DefaultUserId
@@ -29,7 +28,6 @@ namespace ProcessExternalWebhookReceiver.Application.Mappings.Hotmart
             {
                 TaxNumber = hotmartEventPayload.Payload?.Data.Buyer?.Document,
                 Name = hotmartEventPayload.Payload?.Data.Buyer?.Name,
-                Email = hotmartEventPayload.Payload?.Data.Buyer?.Email,
                 Type = personType,
                 CreationUserId = defaultUserService.DefaultUserId,
                 UpdateUserId = defaultUserService.DefaultUserId
