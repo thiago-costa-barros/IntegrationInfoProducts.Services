@@ -14,22 +14,19 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
         private readonly IPersonService _personService;
         private readonly IOptions<DefaultUserService> _defaultUser;
         private readonly ICompanyService _companyService;
-        private readonly ICompanyBranchService _companyBranchService;
         public HotmartEventPurchaseService(
             IPersonService personService, 
             IOptions<DefaultUserService> defaultUser,
-            ICompanyService companyService,
-            ICompanyBranchService companyBranchService)
+            ICompanyService companyService)
         {
             _personService = personService;
             _defaultUser = defaultUser;
             _companyService = companyService;
-            _companyBranchService = companyBranchService;
         }
         public async Task HandlePurchaseEventsAsync(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload, CancellationToken cancellationToken)
         {
             DefaultUserService defaultUser = _defaultUser.Value;
-            string personTaxNumber = hotmartEventPayload.Payload?.Data.Producer?.Document;
+            string? personTaxNumber = hotmartEventPayload.Payload?.Data?.Producer?.Document;
             if (string.IsNullOrEmpty(personTaxNumber))
                 throw new InvalidOperationException("O número de documento do produtor não pode ser nulo ou vazio.");
             
@@ -40,8 +37,7 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
             Person buyerPerson = await _personService.GetOrCreatePerson(buyer, cancellationToken);
 
             Company company = await _companyService.GetCompanyById(hotmartEventPayload.CompanyId);
-            CompanyBranch companyBranch = await _companyBranchService.GetCompanyBranchByCompanyIdAndTaxNumber(company.CompanyId,producerPerson.TaxNumber);
-            //continuar com gets de company, companybranch e person
+            //continuar com gets de BusinessUnit
 
         }
     }
