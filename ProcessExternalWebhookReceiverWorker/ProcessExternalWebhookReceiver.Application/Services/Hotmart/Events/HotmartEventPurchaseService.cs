@@ -11,17 +11,20 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
 {
     public class HotmartEventPurchaseService : IHotmartEventPurchaseService
     {
-        private readonly IPersonService _personService;
         private readonly IOptions<DefaultUserService> _defaultUser;
+        private readonly IPersonService _personService;
         private readonly ICompanyService _companyService;
+        private readonly IBusinessUnitService _businessUnitService;
         public HotmartEventPurchaseService(
-            IPersonService personService, 
             IOptions<DefaultUserService> defaultUser,
-            ICompanyService companyService)
+            IPersonService personService, 
+            ICompanyService companyService,
+            IBusinessUnitService businessUnitService)
         {
-            _personService = personService;
             _defaultUser = defaultUser;
+            _personService = personService;
             _companyService = companyService;
+            _businessUnitService = businessUnitService;
         }
         public async Task HandlePurchaseEventsAsync(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload, CancellationToken cancellationToken)
         {
@@ -37,8 +40,9 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
             Person buyerPerson = await _personService.GetOrCreatePerson(buyer, cancellationToken);
 
             Company company = await _companyService.GetCompanyById(hotmartEventPayload.CompanyId);
-            //continuar com gets de BusinessUnit
 
+            BusinessUnit businessUnit = await _businessUnitService.GetBusinessUnitById(hotmartEventPayload.BusinessUnitId);
+           
         }
     }
 }

@@ -16,6 +16,7 @@ namespace ProcessExternalWebhookReceiver.Application.Mappings.Hotmart
                 SourceType = externalWebhookReceiver.SourceType,
                 Status = externalWebhookReceiver.Status,
                 CompanyId = externalWebhookReceiver.CompanyId,
+                BusinessUnitId = externalWebhookReceiver.BusinessUnitId,
                 ExternalIdentifier = externalWebhookReceiver.ExternalIdentifier,
                 Payload = new HotmartEventPayloadData<HotmartPuchaseEventPayload>
                 {

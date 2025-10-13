@@ -8,6 +8,7 @@ namespace ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events
         public ExternalWebhookReceiverSourceType SourceType { get; set; }
         public ExternalWebhookReceiverStatus Status { get; set; }
         public int CompanyId { get; set; }
+        public int BusinessUnitId { get; set; }
         public string? ExternalIdentifier { get; set; }
         public HotmartEventPayloadData<T>? Payload { get; set; }
     }
