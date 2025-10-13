@@ -15,7 +15,7 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Repositories
             _useCache = appSettings.Value.UseCache;
             _companyDAO = companyDAO;
         }
-        public async Task<Company> GetCompanyById(int companyId, CancellationToken cancellationToken = default)
+        public async Task<Company?> GetCompanyById(int companyId, CancellationToken cancellationToken = default)
         {
             if (_useCache)
             {
@@ -25,7 +25,7 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Repositories
             }
             else
             {
-                Company company = await _companyDAO.GetCompanyById(companyId);
+                Company? company = await _companyDAO.GetCompanyById(companyId);
                 return company;
             }
         }
