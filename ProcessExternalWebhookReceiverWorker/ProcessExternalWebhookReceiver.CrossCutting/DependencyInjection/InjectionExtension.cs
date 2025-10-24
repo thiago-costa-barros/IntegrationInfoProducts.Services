@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ProcessExternalWebhookReceiver.Application;
 using ProcessExternalWebhookReceiver.Infrastructure;
 using CommonSolution.CrossCutting.PostgresSQL;
+using CommonSolution.HttpClient.Interfaces;
 
 namespace ProcessExternalWebhookReceiver.CrossCutting.DependencyInjection
 {
@@ -26,6 +27,9 @@ namespace ProcessExternalWebhookReceiver.CrossCutting.DependencyInjection
 
             //Logging
             services.AddLogging();
+
+            //HttpClient
+            services.AddHttpClient<IHttpClientService, IHttpClientService>();
 
             return services;
         }
