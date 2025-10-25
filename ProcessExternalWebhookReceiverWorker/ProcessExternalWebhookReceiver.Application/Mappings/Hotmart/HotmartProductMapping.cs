@@ -35,17 +35,13 @@ namespace ProcessExternalWebhookReceiver.Application.Mappings.Hotmart
             {
                 Name = hotmartEventPayload.Payload?.Data?.Product?.ProductName,
                 Description = hotmartEventPayload.Payload?.Data?.Purchase?.Offer?.Name,
-                Externalidentifier = hotmartEventPayload.Payload?.Data?.Purchase?.Offer?.Code,
+                ExternalIdentifier = hotmartEventPayload.Payload?.Data?.Purchase?.Offer?.Code,
                 Price = hotmartEventPayload.Payload?.Data?.Purchase?.OriginalOfferPrice?.Value ?? 0,
                 ProductId = productId,
                 BusinessUnitId = businessUnitId,
                 CreationUserId = defaultUserService.DefaultUserId,
                 UpdateUserId = defaultUserService.DefaultUserId
             };
-
-            string? couponCode = hotmartEventPayload.Payload?.Data?.Purchase?.Offer?.CouponCode;
-            if (!String.IsNullOrEmpty(couponCode))
-                 = true;
 
             return productOffer;
         }

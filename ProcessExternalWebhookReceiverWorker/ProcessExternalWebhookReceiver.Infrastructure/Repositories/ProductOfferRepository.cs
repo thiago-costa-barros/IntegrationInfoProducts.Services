@@ -15,9 +15,10 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Repositories
             _useCache = appSettings.Value.UseCache;
             _productOfferDAO = productOfferDAO;
         }
-        public Task<ProductOffer> CreateProductOffer(ProductOffer productOffer)
+        public async Task<ProductOffer> CreateProductOffer(ProductOffer productOffer)
         {
-            throw new NotImplementedException();
+            ProductOffer result = await _productOfferDAO.CreateProductOffer(productOffer);
+            return result;
         }
 
         public async Task<ProductOffer?> GetProductOfferByIdentifierAndBusinessUnitId(string identifier, int businessUnitId)

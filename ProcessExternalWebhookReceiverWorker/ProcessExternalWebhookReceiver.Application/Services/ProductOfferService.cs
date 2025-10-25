@@ -13,7 +13,7 @@ namespace ProcessExternalWebhookReceiver.Application.Services
         }
         public async Task<ProductOffer> GetOrCreateProductOffer(ProductOffer productOffer)
         {
-            ProductOffer? existingProductOffer = await _productOfferRepository.GetProductOfferByIdentifierAndBusinessUnitId(productOffer.Externalidentifier, productOffer.BusinessUnitId);
+            ProductOffer? existingProductOffer = await _productOfferRepository.GetProductOfferByIdentifierAndBusinessUnitId(productOffer.ExternalIdentifier, productOffer.BusinessUnitId);
             if(existingProductOffer == null)
             {
                 ProductOffer newProductOffer = await _productOfferRepository.CreateProductOffer(productOffer);

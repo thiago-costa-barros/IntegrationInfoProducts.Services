@@ -35,9 +35,7 @@ namespace ProcessExternalWebhookReceiver.Application.Worker
         {
             var stopwatch = Stopwatch.StartNew();
             List<ExternalWebhookReceiver> externalWebhookReceivers = await _externalWebhookReceiverRepository.GetExternalWebhookReceiverByStatusAsync(ExternalWebhookReceiverStatus.Created, cancellationToken);
-            List<ExternalWebhookReceiver> externalWebhookReceiversError = await _externalWebhookReceiverRepository.GetExternalWebhookReceiverByStatusAsync(ExternalWebhookReceiverStatus.Error, cancellationToken);
             
-            externalWebhookReceivers.AddRange(externalWebhookReceiversError);
             externalWebhookReceivers = externalWebhookReceivers.Take(batchSize).ToList();
 
             foreach (var externalWebhookReceiver in externalWebhookReceivers)

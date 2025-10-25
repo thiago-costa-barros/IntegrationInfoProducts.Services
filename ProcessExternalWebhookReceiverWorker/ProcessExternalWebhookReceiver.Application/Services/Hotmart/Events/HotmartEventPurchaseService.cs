@@ -1,4 +1,5 @@
 ﻿using CommonSolution.Entities.Common;
+using CommonSolution.Entities.Common.Enums;
 using CommonSolution.Entities.CoreSchema;
 using Microsoft.Extensions.Options;
 using ProcessExternalWebhookReceiver.Application.DTOs.Hotmart.Events;
@@ -17,13 +18,17 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
         private readonly IBusinessUnitService _businessUnitService;
         private readonly IProductService _productService;
         private readonly IProductOfferService _productOfferService;
+        private readonly IOperationService _operationService;
+        private readonly HotmartOperationProcessFactory _factory;
         public HotmartEventPurchaseService(
             IOptions<DefaultUserService> defaultUser,
             IPersonService personService, 
             ICompanyService companyService,
             IBusinessUnitService businessUnitService,
             IProductService productService,
-            IProductOfferService productOfferService)
+            IProductOfferService productOfferService,
+            IOperationService operationService,
+            HotmartOperationProcessFactory factory)
         {
             _defaultUser = defaultUser;
             _personService = personService;
@@ -31,6 +36,8 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
             _businessUnitService = businessUnitService;
             _productService = productService;
             _productOfferService = productOfferService;
+            _operationService = operationService;
+            _factory = factory;
         }
         public async Task HandlePurchaseEventsAsync(HotmartEventPayload<HotmartPuchaseEventPayload> hotmartEventPayload, CancellationToken cancellationToken)
         {
@@ -52,7 +59,20 @@ namespace ProcessExternalWebhookReceiver.Application.Services.Hotmart.Events
             Product hotmartProduct = HotmartProductMapping.HotmartProductMapToProduct(hotmartEventPayload, businessUnit.BusinessUnitId, defaultUser);
             Product product = await _productService.GetOrCreateProduct(hotmartProduct);
 
-            
+            ProductOffer hotmartProductOffer = HotmartProductMapping.HotmartProductMapToProductOffer(hotmartEventPayload, product.ProductId, businessUnit.BusinessUnitId, defaultUser);
+            ProductOffer productOffer = await _productOfferService.GetOrCreateProductOffer(hotmartProductOffer);
+
+            string? hotmartOperationIdentifier = hotmartEventPayload.Payload?.Data?.Purchase?.Transaction;
+            if (string.IsNullOrEmpty(hotmartOperationIdentifier))
+                throw new InvalidOperationException("O identificador da operação não pode ser nulo ou vazio.");
+            string? hotmartOperationType = hotmartEventPayload.Payload?.Data?.Purchase?.Payment?.Type;
+            if (string.IsNullOrEmpty(hotmartOperationType))
+                throw new InvalidOperationException("O tipo da operação não pode ser nulo ou vazio.");
+
+            Operation? operation = await _operationService.GetOperationByIdentifierAndBusinessUnitId(hotmartOperationIdentifier, businessUnit.BusinessUnitId);
+
+            OperationType operationType = HotmartOperationMapping.HotmartMappingOperationType(hotmartOperationType);
+            await _factory.CreateInstance(operationType).OperationProcess(hotmartEventPayload, operation,businessUnit, product, productOffer, defaultUser);
         }
     }
 }

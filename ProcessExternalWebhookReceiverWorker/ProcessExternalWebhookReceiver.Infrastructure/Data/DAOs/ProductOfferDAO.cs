@@ -8,13 +8,17 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
     public class ProductOfferDAO : IProductOfferDAO
     {
         private readonly ApplicationDbContext _context;
+        private const string SchemaName = "CoreSchema";
         public ProductOfferDAO(ApplicationDbContext context)
         {
             _context = context;
         }
         public async Task<ProductOffer> CreateProductOffer(ProductOffer productOffer)
         {
-            throw new NotImplementedException();
+            _context.Add(productOffer);
+            await _context.SaveChangesAsync();
+
+            return productOffer;
         }
 
         public async Task<ProductOffer?> GetProductOfferIdByIdentifierAndBusinessUnitId(string identifier, int businessUnitId)
@@ -25,7 +29,7 @@ namespace ProcessExternalWebhookReceiver.Infrastructure.Data.DAOs
                 ("@paramBusinessUnitId", businessUnitId) 
             };
             await using var command = _context.FunctionCommand(
-                "CoreSchema",
+                SchemaName,
                 "GetProductOfferByIdentifierAndBusinessUnitId",
                 parameters);
 
